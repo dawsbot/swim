@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+if [ ! -d "$HOME/.swim" ]; then
+
+  echo "Creating your .swim directory..."
+  mkdir $HOME/.swim
+  cp $HOME/.vimrc $HOME/.swim/swimrc.main
+
+else
+
+  echo "Swim already downloaded! You have the following swim bindings: "
+  echo "------------------------------------"
+
+  for file in $HOME/.swim/*
+  do
+    echo $file | cut -d . -f 3
+  done
+
+fi
+
