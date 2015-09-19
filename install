@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 if [ ! -d "$HOME/.swim" ]; then
 
-  echo "Creating your .swim directory..."
   mkdir $HOME/.swim
 
   #Top line of swimrc
   HEADER=$(head -n1 ~/.vimrc | cut -d \" -f 2 | cut -d \\ -f 1)
+
   if [ "$HEADER" != "This line required by swim. " ]; then
-    echo "You\'ve never swam with this vimrc file. Congrats!"
-    echo '"This line required by swim. \^main' | cat - $HOME/.vimrc > temp
+    echo "You've never swam with this vimrc file. Congrats!"
+    echo '"This line required by swim. \^*^main' | cat - $HOME/.vimrc > temp
     mv temp $HOME/.vimrc
   fi
   echo "Install complete!"
