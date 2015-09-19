@@ -36,6 +36,7 @@ function swim_ls() {
 
 function uninstall() {
   rm -rf $HOME/.swim
+  #Remove swim from path
   echo "swim uninstalled"
 }
 
