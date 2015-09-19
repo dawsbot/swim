@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+if [ -a "$HOME/.swim/swimrc.$1" ]; then 
+  echo "executing vim with dotfile of $HOME/.swim/swimrc."$1
+  vim -u $HOME/.swim/swimrc.$1 test.html
+else
+  echo "$HOME/.swim/swimrc.$1 does not exist"
+fi
