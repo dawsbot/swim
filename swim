@@ -13,13 +13,13 @@ Usage:
 
 
 Example:
-  swim use main          Set $HOME/.swim/.swimrc.main to be your primary .vimrc
-  swim use pairing       Set $HOME/.swim/.swimrc.pairing to be your primary .vimrc
-
+  swim use main                               Set $HOME/.swim/.swimrc.main to be your primary .vimrc
+  swim use pairing                            Set $HOME/.swim/.swimrc.pairing to be your primary .vimrc
+  swim add ~/dot/.vimrcForPairing pairing     Add an alias called pairing
 
 Setup:
-  Name your vimrc files \"swimrc.<alias>\" and place in $HOME/.swim
-  ls $HOME/.swim to see file naming convention.
+  On install, you should have a swim alias for main. Verify this with "swim ls"
+  For each alias you would like to add, use "swim add".
 
 
 Report bugs to: https://github.com/dawsonbotsford/swim/issues
@@ -59,9 +59,23 @@ function add_alias() {
   echo "swim alias \"$2\" added"
 }
 
+function remove_alias() {
+  if [ $# -eq 0 ]; then
+    print_help
+    exit
+  fi
+
+  activeFile=$(readlink ~/.vimrc)
+  activeAlias=$file | cut -d \. -f 3
+
+  rm ~/.swim/swimrc.$1
+  echo "removed alias $1"
+}
+
 function backup_vimrc (){
   if [ -a "$HOME/.vimrc" ]; then
     mkdir -p $HOME/.swim/oldvimrc
+    # mv $(readlink $HOME/.vimrc) $HOME/.swim/oldvimrc
     mv $HOME/.vimrc $HOME/.swim/oldvimrc
   fi
 }
@@ -85,7 +99,12 @@ while [ $# -gt 0 ]; do
       shift;;
     with | use) shift
       if [ -a "$HOME/.swim/swimrc.$1" ]; then
+        if [[ $(readlink ~/.vimrc | cut -d . -f 3) == $1 ]]; then
+          echo "QUIT"
+          exit
+        fi
         backup_vimrc
+        rm $HOME/.vimrc
         ln -s $HOME/.swim/swimrc.$1 $HOME/.vimrc
         echo "Swimming with: "$1
       else
@@ -94,10 +113,11 @@ while [ $# -gt 0 ]; do
         print_help
       fi
       shift;;
+    remove | delete) remove_alias $2
+                     exit;;
     uninstall) uninstall
                exit;;
     *) print_help
       exit;;
   esac
 done
-
