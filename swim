@@ -6,10 +6,10 @@ function print_help() {
 Switch vimrc files with one line
 
 Usage:
-  swim help                       Show this message
-  swim use <alias>                Change active vimrc file
-  swim add <file name> <alias>    Add a swim alias
-  swim ls                         List aliased vimrc files
+  swim help                         Show this message
+  swim with <alias>                 Change active vimrc file
+  swim add <pathToFile> <alias>     Add a swim alias
+  swim ls                           List aliased vimrc files
 
 
 Example:
@@ -37,7 +37,7 @@ function swim_ls() {
 
 function uninstall() {
   rm -rf $HOME/.swim
-  #Remove swim from path
+  #TODO: Remove swim from path
   echo "swim uninstalled"
 }
 
@@ -54,17 +54,15 @@ function add_alias() {
   fi
   src=$1
   dest=$2
-  echo "going to move from $1 to alias $2"
-  # if [[ ! "$string" =~ "$char" ]]; then
 
-  firstLine=$(head -n1 $1)
-  header="$($firstLine | cut -d \^ -f 2)"
-  # if [ -z $header ] || [ ! $header =~ \^ ]; then
-  if [ -z $header ]; then
-    echo "Empty header"
-  else
-    cp $1 $HOME/.swim/.swimrc.$header
-    echo "swim alias \"$header\" added"
+  cp $1 $HOME/.swim/swimrc.$2
+  echo "swim alias \"$2\" added"
+}
+
+function backup_vimrc (){
+  if [ -a "$HOME/.vimrc" ]; then
+    mkdir -p $HOME/.swim/oldvimrc
+    mv $HOME/.vimrc $HOME/.swim/oldvimrc
   fi
 }
 
@@ -76,24 +74,24 @@ fi
 
 while [ $# -gt 0 ]; do
   case "$1" in
-    help | -h | --help) print_help
+    help) print_help
       exit;;
     ls | -l) shift
       swim_ls;;
     add | -a) add_alias $2 $3
       exit;;
-    use) shift
+    active | current) file=$(readlink ~/.vimrc)
+                      echo $file | cut -d \. -f 3
+      shift;;
+    with | use) shift
       if [ -a "$HOME/.swim/swimrc.$1" ]; then
-        echo "Now using vimrc file: "$1
-
-        alias=get_alias "$HOME/.vimrc"
-        cp $HOME/.vimrc $HOME/.swim/swimrc.$alias
-        echo "----moved--"
-        echo $(ls $HOME/.swim)
-        # vim -u $HOME/.swim/swimrc.$1 test.html
-
+        backup_vimrc
+        ln -s $HOME/.swim/swimrc.$1 $HOME/.vimrc
+        echo "Swimming with: "$1
       else
-        echo "Alias $1 not found"
+        echo "alias $1 not found"
+        sleep 1
+        print_help
       fi
       shift;;
     uninstall) uninstall
