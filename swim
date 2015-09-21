@@ -13,8 +13,8 @@ Usage:
 
 
 Example:
-  swim use main                               Set $HOME/.swim/.swimrc.main to be your primary .vimrc
-  swim use pairing                            Set $HOME/.swim/.swimrc.pairing to be your primary .vimrc
+  swim use main                               Set ~/.swim/.swimrc.main to be your primary .vimrc
+  swim use pairing                            Set ~/.swim/.swimrc.pairing to be your primary .vimrc
   swim add ~/dot/.vimrcForPairing pairing     Add an alias called pairing
 
 Setup:
@@ -24,21 +24,17 @@ Setup:
 
 Report bugs to: https://github.com/dawsonbotsford/swim/issues
 
-Uninstall: \"swim uninstall\"
+Uninstall:
+  From source: bash <(wget -q https://raw.githubusercontent.com/dawsonbotsford/swim/master/install -O -)
+  OSX: \"brew uninstall swim\"
 "
 }
 
 function swim_ls() {
-  for file in $HOME/.swim/*
+  for file in ~/.swim/*
   do
     echo $file | cut -d . -f 3
   done
-}
-
-function uninstall() {
-  rm -rf $HOME/.swim
-  #TODO: Remove swim from path
-  echo "swim uninstalled"
 }
 
 function get_alias() {
@@ -55,7 +51,7 @@ function add_alias() {
   src=$1
   dest=$2
 
-  cp $1 $HOME/.swim/swimrc.$2
+  cp $1 ~/.swim/swimrc.$2
   echo "swim alias \"$2\" added"
 }
 
@@ -73,10 +69,10 @@ function remove_alias() {
 }
 
 function backup_vimrc (){
-  if [ -a "$HOME/.vimrc" ]; then
-    mkdir -p $HOME/.swim/oldvimrc
-    # mv $(readlink $HOME/.vimrc) $HOME/.swim/oldvimrc
-    mv $HOME/.vimrc $HOME/.swim/oldvimrc
+  if [ -a "~/.vimrc" ]; then
+    mkdir -p ~/.swim/oldvimrc
+    # mv $(readlink ~/.vimrc) ~/.swim/oldvimrc
+    mv ~/.vimrc ~/.swim/oldvimrc
   fi
 }
 
@@ -98,14 +94,14 @@ while [ $# -gt 0 ]; do
                       echo $file | cut -d \. -f 3
       shift;;
     with | use) shift
-      if [ -a "$HOME/.swim/swimrc.$1" ]; then
+      if [ -a "~/.swim/swimrc.$1" ]; then
         if [[ $(readlink ~/.vimrc | cut -d . -f 3) == $1 ]]; then
           echo "QUIT"
           exit
         fi
         backup_vimrc
-        rm $HOME/.vimrc
-        ln -s $HOME/.swim/swimrc.$1 $HOME/.vimrc
+        rm ~/.vimrc
+        ln -s ~/.swim/swimrc.$1 ~/.vimrc
         echo "Swimming with: "$1
       else
         echo "alias $1 not found"
@@ -115,8 +111,6 @@ while [ $# -gt 0 ]; do
       shift;;
     remove | delete) remove_alias $2
                      exit;;
-    uninstall) uninstall
-               exit;;
     *) print_help
       exit;;
   esac

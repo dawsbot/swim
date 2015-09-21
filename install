@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
-if [ ! -d "$HOME/.swim" ]; then
-  mkdir $HOME/.swim
-  cp $HOME/.vimrc $HOME/.swim/swimrc.main
+#If swim directory does not exist
+if [ ! -d "~/.swim" ]; then
+  mkdir ~/.swim
+  cp ~/.vimrc ~/.swim/swimrc.main
   echo "Install complete!"
 else
 
   echo "Swim already downloaded! You have the following swim aliases: "
   echo "------------------------------------"
 
-  for file in $HOME/.swim/*
+  for file in ~/.swim/*
   do
     echo $file | cut -d . -f 3
   done
