@@ -1,24 +1,15 @@
 #!/usr/bin/env bash
-if [ ! -d "$HOME/.swim" ]; then
-
-  mkdir $HOME/.swim
-
-  #Top line of swimrc
-  HEADER=$(head -n1 ~/.vimrc | cut -d \" -f 2 | cut -d \\ -f 1)
-
-  if [ "$HEADER" != "This line required by swim. " ]; then
-    echo "You've never swam with this vimrc file. Congrats!"
-    echo '"This line required by swim. \^*^main' | cat - $HOME/.vimrc > temp
-    mv temp $HOME/.vimrc
-  fi
+#If swim directory does not exist
+if [ ! -d "~/.swim" ]; then
+  mkdir ~/.swim
+  cp ~/.vimrc ~/.swim/swimrc.main
   echo "Install complete!"
 else
 
-  cp $HOME/.vimrc $HOME/.swim/swimrc.main
   echo "Swim already downloaded! You have the following swim aliases: "
   echo "------------------------------------"
 
-  for file in $HOME/.swim/*
+  for file in ~/.swim/*
   do
     echo $file | cut -d . -f 3
   done
