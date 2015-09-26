@@ -2,20 +2,22 @@
   <img src="img/GreatWave.jpg" alt="swim logo" width = "400" />
   <br>
   <br>
-  <h3 align = "center">
-    <b>sw</b>itch v<b>im</b>rc files inline instantly
-  </h3>
+  <p align = "center">
+    <b>sw</b>itch v<b>im</b>rc files
+  </p>
 </p>
 
 <br>
 ##Demo
 show a gif of the usage here
 
+<br>
 ##Install
 ```shell
 curl -s https://raw.githubusercontent.com/dawsonbotsford/swim/master/install | bash
 ```
 
+<br>
 ##About
 ```shell
 Usage:
@@ -31,7 +33,9 @@ Example:
   swim add ~/dot/.vimrcForPairing pairing      #Add an alias called pairing
 
 ```
-Keeping your main vimrc file anywhere besides ``` ~/.swim/swimrc.main``` is **not** supported.
+Keeping your main vimrc file anywhere besides ```~/.swim/swimrc.main``` is **not** supported.
 
 
+<br>
+##Disclaimer
 *Backup your dotfiles often and before swimming. I am not responsible for any loss of data.*

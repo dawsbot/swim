@@ -7,7 +7,6 @@ if [ ! -d "~/.swim" ]; then
   cp ~/.vimrc ~/.swim/swimrc.main
 
   #Add swim to path
-  echo "YOOOOOOO: $usrDir"
   curl -o $usrDir/swim -s https://raw.githubusercontent.com/dawsonbotsford/swim/master/swim
   chmod +x $usrDir/swim
   echo "Install complete!"
