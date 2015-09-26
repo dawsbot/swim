@@ -9,6 +9,8 @@ if [ ! -d "~/.swim" ]; then
   #Add swim to path
   curl -o $usrDir/swim -s https://raw.githubusercontent.com/dawsonbotsford/swim/master/swim
   chmod +x $usrDir/swim
+  swim add ~/.vimrc main
+  swim with main
   echo "Install complete!"
 else
 
