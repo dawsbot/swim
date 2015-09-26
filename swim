@@ -25,9 +25,7 @@ Setup:
 Report bugs to: https://github.com/dawsonbotsford/swim/issues
 
 Uninstall:
-```shell
     swim uninstall
-```
 "
 }
 
@@ -85,7 +83,11 @@ fi
 
 while [ $# -gt 0 ]; do
   case "$1" in
+    uninstall) curl -s https://raw.githubusercontent.com/dawsonbotsford/swim/master/uninstall | bash
+      exit;;
+
     help) print_help
+      shift
       exit;;
 
     ls | -l) shift
@@ -95,7 +97,12 @@ while [ $# -gt 0 ]; do
       exit;;
 
     active | current) file=$(readlink ~/.vimrc)
-                      echo $file | cut -d \. -f 3
+                      if [ $file ]; then
+                        echo $file | cut -d \. -f 3
+                      else
+                        echo "Error. Swim may not be installed"
+                        exit
+                      fi
       shift;;
 
     with | use) shift
@@ -117,9 +124,6 @@ while [ $# -gt 0 ]; do
 
     remove | delete) remove_alias $2
                      exit;;
-
-    uninstall) curl -s https://raw.githubusercontent.com/dawsonbotsford/swim/master/uninstall | bash
-      exit;;
 
     *) print_help
       exit;;
