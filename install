@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
+usrDir=/usr/local/bin
+
 #If swim directory does not exist
 if [ ! -d "~/.swim" ]; then
   mkdir ~/.swim
   cp ~/.vimrc ~/.swim/swimrc.main
+
+  #Add swim to path
+  echo "YOOOOOOO: $usrDir"
+  curl -o $usrDir/swim -s https://raw.githubusercontent.com/dawsonbotsford/swim/master/swim
+  chmod +x $usrDir/swim
   echo "Install complete!"
 else
 
@@ -13,7 +20,7 @@ else
   do
     echo $file | cut -d . -f 3
   done
-  echo "------------------------------------"
+o echo "------------------------------------"
 
 fi
 
