@@ -18,8 +18,8 @@ Example:
   swim add ~/dot/.vimrcForPairing pairing     Add an alias called pairing
 
 Setup:
-  On install, you should have a swim alias for main. Verify this with "swim ls"
-  For each alias you would like to add, use "swim add".
+  On install, you should have a swim alias for main. Verify this with \"swim ls\"
+  For each alias you would like to add, use \"swim add\".
 
 
 Report bugs to: https://github.com/dawsonbotsford/swim/issues
