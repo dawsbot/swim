@@ -13,11 +13,25 @@ show a gif of the usage here
 
 ##Install
 ```shell
-    ./install.sh
+curl -s https://raw.githubusercontent.com/dawsonbotsford/swim/master/install | bash
 ```
 
 ##About
-Keeping your main vimrc file anywhere besides ```shell ~/.swim/swimrc.main``` is **not** supported.
+```shell
+Usage:
+  swim help                         #Show this message
+  swim with <alias>                 #Change active vimrc file
+  swim add <pathToFile> <alias>     #Add a swim alias
+  swim ls                           #List aliased vimrc files
+  swim active                       #Show currently aliased vimrc
+
+Example:
+  swim with main                               #Set ~/.swim/.swimrc.main to be your primary .vimrc
+  swim with pairing                            #Set ~/.swim/.swimrc.pairing to be your primary .vimrc
+  swim add ~/dot/.vimrcForPairing pairing      #Add an alias called pairing
+
+```
+Keeping your main vimrc file anywhere besides ``` ~/.swim/swimrc.main``` is **not** supported.
 
 
-*Backup your dotfiles often, I am not responsible for any loss of data due to your swimming*
+*Backup your dotfiles often and before swimming. I am not responsible for any loss of data.*

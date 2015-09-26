@@ -10,11 +10,11 @@ Usage:
   swim with <alias>                 Change active vimrc file
   swim add <pathToFile> <alias>     Add a swim alias
   swim ls                           List aliased vimrc files
-
+  swim active                       Show currently aliased vimrc
 
 Example:
-  swim use main                               Set ~/.swim/.swimrc.main to be your primary .vimrc
-  swim use pairing                            Set ~/.swim/.swimrc.pairing to be your primary .vimrc
+  swim with main                               Set ~/.swim/.swimrc.main to be your primary .vimrc
+  swim with pairing                            Set ~/.swim/.swimrc.pairing to be your primary .vimrc
   swim add ~/dot/.vimrcForPairing pairing     Add an alias called pairing
 
 Setup:
@@ -25,8 +25,9 @@ Setup:
 Report bugs to: https://github.com/dawsonbotsford/swim/issues
 
 Uninstall:
-  From source: bash <(wget -q https://raw.githubusercontent.com/dawsonbotsford/swim/master/install -O -)
-  OSX: \"brew uninstall swim\"
+```shell
+    swim uninstall
+```
 "
 }
 
@@ -86,17 +87,21 @@ while [ $# -gt 0 ]; do
   case "$1" in
     help) print_help
       exit;;
+
     ls | -l) shift
       swim_ls;;
+
     add | -a) add_alias $2 $3
       exit;;
+
     active | current) file=$(readlink ~/.vimrc)
                       echo $file | cut -d \. -f 3
       shift;;
+
     with | use) shift
-      if [ -a "~/.swim/swimrc.$1" ]; then
+      if [ -e "$HOME/.swim/swimrc.$1" ]; then
         if [[ $(readlink ~/.vimrc | cut -d . -f 3) == $1 ]]; then
-          echo "QUIT"
+          echo "That alias is already active. Aborting."
           exit
         fi
         backup_vimrc
@@ -109,8 +114,13 @@ while [ $# -gt 0 ]; do
         print_help
       fi
       shift;;
+
     remove | delete) remove_alias $2
                      exit;;
+
+    uninstall) curl -s https://raw.githubusercontent.com/dawsonbotsford/swim/master/uninstall | bash
+      exit;;
+
     *) print_help
       exit;;
   esac
