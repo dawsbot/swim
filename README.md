@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="img/GreatWave.jpg" alt="swim logo" width = "400" />
+  <img src="media/GreatWave.jpg" alt="swim logo" width = "400" />
   <br>
   <br>
   <p align = "center">
