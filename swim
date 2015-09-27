@@ -108,7 +108,7 @@ while [ $# -gt 0 ]; do
     with | use) shift
       if [ -e "$HOME/.swim/swimrc.$1" ]; then
         if [[ $(readlink ~/.vimrc | cut -d . -f 3) == $1 ]]; then
-          echo "That alias is already active. Aborting."
+          echo "That alias is already active."
           exit
         fi
         backup_vimrc
