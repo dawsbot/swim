@@ -3,24 +3,22 @@
 function print_help() {
   echo "
 
-Switch vimrc files with one line
+Switch vimrc files without pain
 
 Usage:
-  swim help                         Show this message
-  swim with <alias>                 Change active vimrc file
-  swim add <pathToFile> <alias>     Add a swim alias
-  swim ls                           List aliased vimrc files
-  swim active                       Show currently aliased vimrc
+  swim help                                    Show this message
+  swim with <alias>                            Change active vimrc file
+  swim add <pathToFile or URLToRaw> <alias>    Add a swim alias
+  swim ls                                      List aliased vimrc files
+  swim active                                  Show currently aliased vimrc
 
 Example:
-  swim with main                               Set ~/.swim/.swimrc.main to be your primary .vimrc
+  swim add ~/dot/.vimrcForPairing pairing      Add an alias called pairing
   swim with pairing                            Set ~/.swim/.swimrc.pairing to be your primary .vimrc
-  swim add ~/dot/.vimrcForPairing pairing     Add an alias called pairing
+  swim with main                               Set ~/.swim/.swimrc.main to be your primary .vimrc
 
 Setup:
-  On install, you should have a swim alias for main. Verify this with \"swim ls\"
-  For each alias you would like to add, use \"swim add\".
-
+  On install, you will have a main swim alias. Verify this with \"swim ls\". Add alternate vimrc aliases with swim add. Then use swim with to change your active vimrc file.
 
 Report bugs to: https://github.com/dawsonbotsford/swim/issues
 
@@ -49,8 +47,15 @@ function add_alias() {
   fi
   src=$1
   dest=$2
-
-  cp $1 ~/.swim/swimrc.$2
+  webRegex='(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'
+  if [[ $1 =~ $webRegex ]]
+  then
+    echo "performing curl"
+    curl -o ~/.swim/swimrc.$2 -s $1
+  else
+    echo "adding local alias"
+    cp $1 ~/.swim/swimrc.$2
+  fi
   echo "swim alias \"$2\" added"
 }
 
@@ -108,13 +113,13 @@ while [ $# -gt 0 ]; do
     with | use) shift
       if [ -e "$HOME/.swim/swimrc.$1" ]; then
         if [[ $(readlink ~/.vimrc | cut -d . -f 3) == $1 ]]; then
-          echo "That alias is already active."
+          echo "that swimrc is already active."
           exit
         fi
         backup_vimrc
         rm ~/.vimrc
         ln -s ~/.swim/swimrc.$1 ~/.vimrc
-        echo "Swimming with: "$1
+        echo "swimming with "$1
       else
         echo "alias $1 not found"
         sleep 1
