@@ -26,8 +26,8 @@ Usage:
 Example:
   swim add https://raw.githubusercontent.com/dawsonbotsford/swim/master/exampleVimrcs/vimrcWikia.vim example
   swim ls                    Show available swim aliases
-  swim with example          Set ~/.swim/.swimrc.example as primary .vimrc
-  swim with main             Set ~/.swim/.swimrc.main as primary .vimrc
+  swim with example          Set ~/.swim/example.vim as primary .vimrc
+  swim with main             Set ~/.swim/main.vim as primary .vimrc
 
 
 Setup:
@@ -49,10 +49,10 @@ function swim_ls() {
   for file in $HOME/.swim/*
   do
 
-    alias=$(echo $file | cut -d . -f 3)
+    alias=$(echo $file | cut -d . -f 2)
 
     #chalk active with green, default otherwise
-    if [[ $(readlink $HOME/.vimrc | cut -d . -f 3) == $alias ]]; then
+    if [[ $(readlink $HOME/.vimrc | cut -d . -f 2) == $alias ]]; then
       printf "> "$alias" (active)\n" | chalk green
     else
       printf $alias"\n"
@@ -74,9 +74,9 @@ function add_alias() {
   if [[ $1 =~ $webRegex ]]
   then
     printf "fetching from the web...\n" | chalk yellow
-    curl -o $HOME/.swim/swimrc.$2 -s $1
+    curl -o $HOME/.swim/$2.vim -s $1
   else
-    cp $1 $HOME/.swim/swimrc.$2
+    cp $1 $HOME/.swim/$2.vim
   fi
   printf "swim alias \"$2\" added\n" | chalk yellow
 }
@@ -92,18 +92,18 @@ function mv_alias() {
   dest=$2
 
   #alias not found
-  if [[ ! $(ls -A $HOME/.swim/swimrc.$1 2>/dev/null) ]]; then
+  if [[ ! $(ls -A $HOME/.swim/$1.vim 2>/dev/null) ]]; then
     printf "alias $1 not found" | chalk red
     swim_ls
     exit
   fi
 
-  mv $HOME/.swim/swimrc.$1 $HOME/.swim/swimrc.$2
+  mv $HOME/.swim/$1.vim $HOME/.swim/$2.vim
 
   printf "swim alias \"$2\" added\n" | chalk yellow
 
   #if trying to move active vimrc
-  if [[ $(readlink $HOME/.vimrc | cut -d . -f 3) == $1 ]]; then
+  if [[ $(readlink $HOME/.vimrc | cut -d . -f 2) == $1 ]]; then
     swim with $2
   fi
 
@@ -117,19 +117,19 @@ function remove_alias() {
   fi
 
   #alias does not exist
-  if [[ ! $(ls -A $HOME/.swim/swimrc.$1 2>/dev/null) ]]; then
-    printf "alias does not exist" | chalk red
+  if [[ ! $(ls -A $HOME/.swim/$1.vim 2>/dev/null) ]]; then
+    printf "alias $1 does not exist" | chalk red
     sleep 1
     print_help
     exit
   fi
 
   #Trying to delete active vimrc
-  if [[ $(readlink $HOME/.vimrc | cut -d . -f 3) == $1 ]]; then
+  if [[ $(readlink $HOME/.vimrc | cut -d . -f 2) == $1 ]]; then
     swim with main
   fi
 
-  rm $HOME/.swim/swimrc.$1
+  rm $HOME/.swim/$1.vim
   printf "removed alias $1\n" | chalk green
 }
 
@@ -157,7 +157,7 @@ while [ $# -gt 0 ]; do
 
     with | use) shift
       #if alias exists
-      if [ -e "$HOME/.swim/swimrc.$1" ]; then
+      if [ -e "$HOME/.swim/swimrc.$1.vim" ]; then
         #Setting active to what's already active
         if [[ $(readlink $HOME/.vimrc | cut -d . -f 3) == $1 ]]; then
           printf "$1 is already active.\n" | chalk red
@@ -165,7 +165,7 @@ while [ $# -gt 0 ]; do
         fi
         backup_vimrc
         rm $HOME/.vimrc 2>/dev/null
-        ln -s $HOME/.swim/swimrc.$1 $HOME/.vimrc
+        ln -s $HOME/.swim/$1.vim $HOME/.vimrc
         printf "swimming with "$1 | chalk green
       else
         printf "alias $1 not found\n" | chalk red
@@ -179,7 +179,7 @@ while [ $# -gt 0 ]; do
 
     active | current) file=$(readlink $HOME/.vimrc)
       if [ $file ]; then
-        printf $file | cut -d \. -f 3 | chalk green
+        printf $file | cut -d \. -f 2 | chalk green
       else
         printf "vimrc not found. Perform a \"swim add\" and \"swim with\"\n" | chalk red
         exit
@@ -191,7 +191,7 @@ while [ $# -gt 0 ]; do
         printf "expected 1 arg, received $#" | chalk red
       else
         # "${EDITOR:-vi}" $HOME/.swim/swimrc.$1
-       vim $HOME/.swim/swimrc.$1
+       vim $HOME/.swim/$1\.vim
       fi
       exit;;
 
