@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 usrDir=/usr/local/bin
 
-printf "\nDownloading chalk (Terminal coloring library)...\n"
+if [[ ! $(which npm 2>/dev/null) ]]; then
+  printf "npm is a required dependency. Please download it" | chalk red
+fi
 
 #Terminal coloring library
-npm install --global chalk-cli
+if [[ ! $(which chalk 2>/dev/null) ]]; then
+  printf "\nDownloading chalk (Terminal coloring library)...\n"
+  npm install --global chalk-cli
+fi
 
 printf "\n\n"
 
@@ -21,7 +26,8 @@ if [ ! -d "$HOME/.swim" ]; then
   if [[ ! $(ls -A $HOME/.vimrc 2>/dev/null) ]]; then
     printf "We could not find a .vimrc for you so we made one up!\n"
     touch $HOME/.vimrc
-    printf "colorscheme blue" > $HOME/.vimrc
+    printf "\"Swim example vimrc file
+set number" > $HOME/.vimrc
   fi
 
   mkdir -p $HOME/.swim
@@ -39,13 +45,20 @@ else
 
   printf "Swim already downloaded!\n" | chalk green
   printf "You have the following swim aliases: \n"
+
   printf "%s\n" "--------------------------" | chalk white
-
-  for file in $HOME/.swim/*
+  for file in ~/.swim/*
   do
-    echo $file | cut -d . -f 3
-  done
 
+    alias=$(echo $file | cut -d . -f 3)
+
+    #chalk active with green, default otherwise
+    if [[ $(readlink ~/.vimrc | cut -d . -f 3) == $alias ]]; then
+      printf "> "$alias" (active)\n" | chalk green
+    else
+      printf $alias"\n"
+    fi
+  done
   printf "%s\n" "--------------------------" | chalk white
 
 fi
