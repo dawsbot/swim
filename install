@@ -30,7 +30,6 @@ if [ ! -d "$HOME/.swim" ]; then
 set number" > $HOME/.vimrc
   fi
 
-  echo "HOME:$HOME"
   mkdir -p $HOME/.swim
   cp $HOME/.vimrc $HOME/.swim/main.vim
 
