@@ -4,7 +4,7 @@
 #Repo Location: https://github.com/dawsonbotsford/swim
 #Date: 09-28-2015
 
-VERSION="0.2.4"
+VERSION="0.2.5"
 usrDir=/usr/local/bin
 
 function print_help() {
@@ -45,6 +45,13 @@ Uninstall:
 #Print the current aliases available to swim with
 #Store as swimrc.<alias> files in $HOME/.swim
 function swim_ls() {
+
+  #No swim aliases
+  if [[ ! $(ls -A $HOME/.swim 2>/dev/null) ]]; then
+    printf "nothing to swim with. Try a \"swim add\"" | chalk red
+    exit
+  fi
+
   printf "%s\n" "--------------------------" | chalk white
   for file in $HOME/.swim/*
   do
