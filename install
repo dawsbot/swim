@@ -52,10 +52,10 @@ else
   for file in $HOME/.swim/*
   do
 
-    alias=$(echo $file | cut -d . -f 2)
+    alias=$(echo $file |  cut -d / -f 5 | cut -d . -f 1)
 
     #chalk active with green, default otherwise
-    if [[ $(readlink ~/.vimrc | cut -d . -f 2) == $alias ]]; then
+    if [[ $(readlink ~/.vimrc |  cut -d / -f 5 | cut -d . -f 1) == $alias ]]; then
       printf "> "$alias" (active)\n" | chalk green
     else
       printf $alias"\n"
