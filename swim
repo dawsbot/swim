@@ -1,24 +1,40 @@
 #!/usr/bin/env bash
 
+#Author: @DawsonBotsford  |  dawsonbotsford.com
+#Repo Location: https://github.com/dawsonbotsford/swim
+#Date: 09-28-2015
+
+VERSION="1.0.0"
+usrDir=/usr/local/bin
+
 function print_help() {
   echo "
 
 Switch vimrc files without pain
 
 Usage:
-  swim help                                    Show this message
+  swim add <URLToRaw or pathToFile>  <alias>   Add a swim alias
   swim with <alias>                            Change active vimrc file
-  swim add <pathToFile or URLToRaw> <alias>    Add a swim alias
   swim ls                                      List aliased vimrc files
   swim active                                  Show currently aliased vimrc
+  swim rename <alias1> <alias2>                Rename alias (like Linux mv)
+  swim delete <alias>                          Delete an alias entirely
+  swim update                                  Download newest version
+  swim version                                 Print version
+  swim help                                    Show this message
+
 
 Example:
-  swim add ~/dot/.vimrcForPairing pairing      Add an alias called pairing
-  swim with pairing                            Set ~/.swim/.swimrc.pairing to be your primary .vimrc
-  swim with main                               Set ~/.swim/.swimrc.main to be your primary .vimrc
+  swim add github.com/dawsonbotsford/swim/exampleVimrcs/vimrcWikia.vim example
+  swim ls                    Show available swim aliases
+  swim with example          Set ~/.swim/.swimrc.example as primary .vimrc
+  swim with main             Set ~/.swim/.swimrc.main as primary .vimrc
+
 
 Setup:
-  On install, you will have a main swim alias. Verify this with \"swim ls\". Add alternate vimrc aliases with swim add. Then use swim with to change your active vimrc file.
+  On install, you will have the \"main\" swim alias. Add alternate vimrc aliases with \"swim add <URLToRaw or pathToFile>  <alias>\"
+  Then use \"swim with <alias\" to change your active vimrc file.
+
 
 Report bugs to: https://github.com/dawsonbotsford/swim/issues
 
@@ -53,9 +69,28 @@ function add_alias() {
     echo "performing curl"
     curl -o ~/.swim/swimrc.$2 -s $1
   else
-    echo "adding local alias"
     cp $1 ~/.swim/swimrc.$2
   fi
+  echo "swim alias \"$2\" added"
+}
+
+function mv_alias() {
+  if [ $# -lt 2 ]
+  then
+    print_help
+    exit
+  fi
+  src=$1
+  dest=$2
+
+  mv ~/.swim/swimrc.$1 ~/.swim/swimrc.$2
+
+  #if trying to move active vimrc
+  if [[ $(readlink ~/.vimrc | cut -d . -f 3) == $1 ]]; then
+    echo "swimming with "$2
+    ln -s ~/.swim/swimrc.$2 ~/.vimrc
+  fi
+
   echo "swim alias \"$2\" added"
 }
 
@@ -91,23 +126,27 @@ while [ $# -gt 0 ]; do
     uninstall) curl -s https://raw.githubusercontent.com/dawsonbotsford/swim/master/uninstall | bash
       exit;;
 
-    help) print_help
+    help | -h) print_help
       shift
       exit;;
 
-    ls | -l) shift
-      swim_ls;;
+    ls | show | -l) shift
+      swim_ls
+      exit;;
 
-    add | -a) add_alias $2 $3
+    add | new | -a) add_alias $2 $3
+      exit;;
+
+    rename | mv | move) mv_alias $2 $3
       exit;;
 
     active | current) file=$(readlink ~/.vimrc)
-                      if [ $file ]; then
-                        echo $file | cut -d \. -f 3
-                      else
-                        echo "Error. Swim may not be installed"
-                        exit
-                      fi
+      if [ $file ]; then
+        echo $file | cut -d \. -f 3
+      else
+        echo "Error. Swim may not be installed"
+        exit
+      fi
       shift;;
 
     with | use) shift
@@ -129,6 +168,16 @@ while [ $# -gt 0 ]; do
 
     remove | delete) remove_alias $2
                      exit;;
+
+    update | install) printf "Old version: " && swim version | chalk bold red
+      printf "Downloading from Github.com/dawsonbotsford/swim...\n"
+      curl -o $usrDir/swim -s https://raw.githubusercontent.com/dawsonbotsford/swim/master/swim
+      chmod +x $usrDir/swim
+      printf "New version: " && swim version | chalk green
+      exit;;
+
+    version | -v | -V) echo $VERSION
+      exit;;
 
     *) print_help
       exit;;

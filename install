@@ -1,36 +1,51 @@
 #!/usr/bin/env bash
 usrDir=/usr/local/bin
 
+printf "\nDownloading chalk (Terminal coloring library)...\n"
+
+#Terminal coloring library
+npm install --global chalk-cli
+
+printf "\n\n"
+
 #If swim directory does not exist
-if [ ! -d "~/.swim" ]; then
+if [ ! -d "$HOME/.swim" ]; then
+
+  #Download the primary swim script
+  curl -o $usrDir/swim -s https://raw.githubusercontent.com/dawsonbotsford/swim/master/swim
 
   #Add swim to path
-  curl -o $usrDir/swim -s https://raw.githubusercontent.com/dawsonbotsford/swim/master/swim
   chmod +x $usrDir/swim
 
   #If root's vimrc does not exist
-  if [ ! -L "~/.vimrc" ] && [ ! -e "~/.vimrc" ]; then
-    echo "We could not find a .vimrc for you so we made one up!"
-    echo "colorscheme blue" > ~/.vimrc
+  if [[ ! $(ls -A $HOME/.vimrc 2>/dev/null) ]]; then
+    printf "We could not find a .vimrc for you so we made one up!\n"
+    touch $HOME/.vimrc
+    printf "colorscheme blue" > $HOME/.vimrc
   fi
 
-  mkdir -p ~/.swim
-  cp ~/.vimrc ~/.swim/swimrc.main
+  mkdir -p $HOME/.swim
+  cp $HOME/.vimrc $HOME/.swim/swimrc.main
 
-  swim add ~/.vimrc main
+  printf "calling \"swim add $HOME/.vimrc main\"\n"
+  swim add $HOME/.vimrc main
+
+  printf "calling \"swim with main\"\n"
   swim with main
 
-  echo "Install complete!"
+  printf "\nInstall complete!\n\n" | chalk green
+
 else
 
-  echo "Swim already downloaded! You have the following swim aliases: "
-  echo "------------------------------------"
+  printf "Swim already downloaded!\n" | chalk green
+  printf "You have the following swim aliases: \n"
+  printf "%s\n" "--------------------------"
 
-  for file in ~/.swim/*
+  for file in $HOME/.swim/*
   do
     echo $file | cut -d . -f 3
   done
-o echo "------------------------------------"
+
+  printf "%s\n" "--------------------------"
 
 fi
-

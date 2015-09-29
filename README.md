@@ -13,29 +13,50 @@ show a gif of the usage here
 
 <br>
 ##Install
+Backup your files **before** swimming
+
 ```shell
 curl -s https://raw.githubusercontent.com/dawsonbotsford/swim/master/install | bash
 ```
 
 <br>
-##About
-```shell
-Usage:
-  swim help                         #Show this message
-  swim with <alias>                 #Change active vimrc file
-  swim add <pathToFile> <alias>     #Add a swim alias
-  swim ls                           #List aliased vimrc files
-  swim active                       #Show currently aliased vimrc
-
-Example:
-  swim with main                               #Set ~/.swim/.swimrc.main to be your primary .vimrc
-  swim with pairing                            #Set ~/.swim/.swimrc.pairing to be your primary .vimrc
-  swim add ~/dot/.vimrcForPairing pairing      #Add an alias called pairing
-
-```
-Keeping your main vimrc file anywhere besides ```~/.swim/swimrc.main``` is **not** supported.
-
+####Requirements
+* node.js and npm
 
 <br>
-##Disclaimer
-*Backup your dotfiles often and before swimming. I am not responsible for any loss of data.*
+##Examples
+```shell
+  swim add github.com/dawsonbotsford/swim/exampleVimrcs/vimrcWikia.vim example
+  swim ls                    #Show available swim aliases
+  swim with example          #Set alias ```example``` as primary .vimrc
+  swim with main             #Set alias ```main``` as primary .vimrc
+
+```
+
+<br>
+##Available Commands
+```shell
+swim add <URLToRaw or pathToFile>  <alias>   #Add a swim alias
+swim with <alias>                            #Change active vimrc file
+swim ls                                      #List aliased vimrc files
+swim active                                  #Show currently aliased vimrc
+swim rename <alias1> <alias2>                #Rename alias (like Linux mv)
+swim delete <alias>                          #Delete an alias entirely
+swim update                                  #Download newest version
+swim version                                 #Print version
+swim help                                    #Print this message
+```
+
+<br>
+##Update
+```shell
+swim update    #Downloads newest version
+```
+
+<br>
+##Changelog
+**1.0.0**: Initial Launch
+
+<br>
+##License
+MIT
