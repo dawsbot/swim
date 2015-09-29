@@ -4,7 +4,7 @@
 #Repo Location: https://github.com/dawsonbotsford/swim
 #Date: 09-28-2015
 
-VERSION="0.2.2"
+VERSION="0.2.3"
 usrDir=/usr/local/bin
 
 function print_help() {
@@ -135,7 +135,6 @@ function remove_alias() {
 
 function backup_vimrc (){
   if [ -a "$HOME/.vimrc" ]; then
-    mkdir -p $HOME/.swim/oldvimrc.vim
     mv $HOME/.vimrc $HOME/.swim/oldvimrc.vim
   fi
 }
