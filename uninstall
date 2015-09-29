@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-mv ~/.swim/swimrc.main ~/.vimrc 2>/dev/null
+mv $HOME/.swim/swimrc.main $HOME/.vimrc 2>/dev/null
 echo "swimrc.main set to ~/.vimrc"
 
-rm -rf ~/.swim
+rm -rf $HOME/.swim 2>/dev/null
 echo "swim directory removed from ~"
 
-rm -rf /usr/local/bin/swim
+rm -rf /usr/local/bin/swim 2>/dev/null
 echo "swim uninstalled"

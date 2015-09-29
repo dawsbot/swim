@@ -2,7 +2,7 @@
 usrDir=/usr/local/bin
 
 if [[ ! $(which npm 2>/dev/null) ]]; then
-  printf "npm is a required dependency. Please download it" | chalk red
+  printf "npm is required and not found. Download it then retry" | chalk red
 fi
 
 #Terminal coloring library
@@ -30,8 +30,9 @@ if [ ! -d "$HOME/.swim" ]; then
 set number" > $HOME/.vimrc
   fi
 
+  echo "HOME:$HOME"
   mkdir -p $HOME/.swim
-  cp $HOME/.vimrc $HOME/.swim/swimrc.main
+  cp $HOME/.vimrc $HOME/.swim/main.vim
 
   printf "calling \"swim add $HOME/.vimrc main\"\n"
   swim add $HOME/.vimrc main
@@ -47,13 +48,13 @@ else
   printf "You have the following swim aliases: \n"
 
   printf "%s\n" "--------------------------" | chalk white
-  for file in ~/.swim/*
+  for file in $HOME/.swim/*
   do
 
     alias=$(echo $file | cut -d . -f 3)
 
     #chalk active with green, default otherwise
-    if [[ $(readlink ~/.vimrc | cut -d . -f 3) == $alias ]]; then
+    if [[ $(readlink ~/.vimrc | cut -d . -f 2) == $alias ]]; then
       printf "> "$alias" (active)\n" | chalk green
     else
       printf $alias"\n"
