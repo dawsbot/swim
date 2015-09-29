@@ -4,7 +4,7 @@
 #Repo Location: https://github.com/dawsonbotsford/swim
 #Date: 09-28-2015
 
-VERSION="1.0.0"
+VERSION="Prelaunch"
 usrDir=/usr/local/bin
 
 function print_help() {
@@ -43,18 +43,24 @@ Uninstall:
 "
 }
 
+#Print the current aliases available to swim with
+#Store as swimrc.<alias> files in ~/.swim
 function swim_ls() {
   for file in ~/.swim/*
   do
-    echo $file | cut -d . -f 3
+
+    alias=$(echo $file | cut -d . -f 3)
+
+    #chalk active with green, default otherwise
+    if [[ $(readlink ~/.vimrc | cut -d . -f 3) == $alias ]]; then
+      echo $alias "(active)" | chalk green
+    else
+      echo $alias
+    fi
   done
 }
 
-function get_alias() {
-  path = $1
-  return head -n1 $path | cut -d \" -f 2 | cut -d \\ -f 2
-}
-
+#Add alias to swim. Takes as input a url or a path and a destination alias
 function add_alias() {
   if [ $# -lt 2 ]
   then
@@ -66,14 +72,15 @@ function add_alias() {
   webRegex='(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'
   if [[ $1 =~ $webRegex ]]
   then
-    echo "performing curl"
+    printf "fetching from the web...\n"
     curl -o ~/.swim/swimrc.$2 -s $1
   else
     cp $1 ~/.swim/swimrc.$2
   fi
-  echo "swim alias \"$2\" added"
+  printf "swim alias \"$2\" added"
 }
 
+#Moves an alias from arg1 to arg2
 function mv_alias() {
   if [ $# -lt 2 ]
   then
@@ -87,13 +94,14 @@ function mv_alias() {
 
   #if trying to move active vimrc
   if [[ $(readlink ~/.vimrc | cut -d . -f 3) == $1 ]]; then
-    echo "swimming with "$2
+    echo "swimming with "$2 | chalk yellow
     ln -s ~/.swim/swimrc.$2 ~/.vimrc
   fi
 
   echo "swim alias \"$2\" added"
 }
 
+#Permanently deletes available swim alias
 function remove_alias() {
   if [ $# -eq 0 ]; then
     print_help
@@ -103,8 +111,17 @@ function remove_alias() {
   activeFile=$(readlink ~/.vimrc)
   activeAlias=$file | cut -d \. -f 3
 
+  #TODO: if trying to delete active vimrc
+  echo "YOOOOOO"$(readlink ~/.vimrc | cut -d . -f 3) 
+  echo "activealias:$activeAlias aaa"
+  if [[ $(readlink ~/.vimrc | cut -d . -f 3) == $activeAlias ]]; then
+    printf "swimming with main" | chalk yellow
+    ln -s ~/.swim/swimrc.main ~/.vimrc
+  fi
+
   rm ~/.swim/swimrc.$1
-  echo "removed alias $1"
+  printf "removed alias $1\n" | chalk green
+
 }
 
 function backup_vimrc (){
@@ -123,50 +140,47 @@ fi
 
 while [ $# -gt 0 ]; do
   case "$1" in
-    uninstall) curl -s https://raw.githubusercontent.com/dawsonbotsford/swim/master/uninstall | bash
-      exit;;
-
     help | -h) print_help
       shift
-      exit;;
-
-    ls | show | -l) shift
-      swim_ls
       exit;;
 
     add | new | -a) add_alias $2 $3
       exit;;
 
-    rename | mv | move) mv_alias $2 $3
+    with | use) shift
+      if [ -e "$HOME/.swim/swimrc.$1" ]; then
+        if [[ $(readlink ~/.vimrc | cut -d . -f 3) == $1 ]]; then
+          echo "$1 is already active.\n" | chalk red
+          exit
+        fi
+        backup_vimrc
+        rm ~/.vimrc
+        ln -s ~/.swim/swimrc.$1 ~/.vimrc
+        echo "swimming with "$1 | chalk yellow
+      else
+        printf "alias $1 not found\n" | chalk red
+        sleep 1
+        print_help
+      fi
+      shift;;
+
+    ls | show | -l) shift
+      swim_ls
       exit;;
 
     active | current) file=$(readlink ~/.vimrc)
       if [ $file ]; then
         echo $file | cut -d \. -f 3
       else
-        echo "Error. Swim may not be installed"
+        printf "vimrc not found. Perform a \"swim add\" and \"swim with\"\n" | chalk red
         exit
       fi
       shift;;
 
-    with | use) shift
-      if [ -e "$HOME/.swim/swimrc.$1" ]; then
-        if [[ $(readlink ~/.vimrc | cut -d . -f 3) == $1 ]]; then
-          echo "that swimrc is already active."
-          exit
-        fi
-        backup_vimrc
-        rm ~/.vimrc
-        ln -s ~/.swim/swimrc.$1 ~/.vimrc
-        echo "swimming with "$1
-      else
-        echo "alias $1 not found"
-        sleep 1
-        print_help
-      fi
-      shift;;
+    rename | mv | move) mv_alias $2 $3
+      exit;;
 
-    remove | delete) remove_alias $2
+    delete | remove | -d) remove_alias $2
                      exit;;
 
     update | install) printf "Old version: " && swim version | chalk bold red
@@ -177,6 +191,9 @@ while [ $# -gt 0 ]; do
       exit;;
 
     version | -v | -V) echo $VERSION
+      exit;;
+
+    uninstall) curl -s https://raw.githubusercontent.com/dawsonbotsford/swim/master/uninstall | bash
       exit;;
 
     *) print_help

@@ -56,6 +56,7 @@ swim update    #Downloads newest version
 <br>
 ##Changelog
 **1.0.0**: Initial Launch
+**Prelaunch**: Beta Testing
 
 <br>
 ##License
