@@ -4,7 +4,7 @@
 #Repo Location: https://github.com/dawsonbotsford/swim
 #Date: 09-28-2015
 
-VERSION="0.2.5"
+VERSION="0.3.0"
 usrDir=/usr/local/bin
 
 function print_help() {
@@ -16,9 +16,10 @@ Usage:
   swim with <alias>                            Change active vimrc file
   swim ls                                      List aliased vimrc files
   swim active                                  Show currently active vimrc
+  swim vim <alias>			       Edit the vimrc stored at alias
   swim mv <alias1> <alias2>                    Rename alias
   swim rm <alias>                              Delete an alias entirely
-  swim update                                  Download newest version
+  swim update                                  Download newest version of swim
   swim version                                 Print version
   swim help                                    Show this message
 
@@ -86,6 +87,7 @@ function add_alias() {
     cp $1 $HOME/.swim/$2.vim
   fi
   printf "swim alias \"$2\" added\n" | chalk yellow
+  swim with $2
 }
 
 #Moves an alias from arg1 to arg2

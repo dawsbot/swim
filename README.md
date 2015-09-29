@@ -19,18 +19,22 @@ Backup your files **before** swimming
 curl -s https://raw.githubusercontent.com/dawsonbotsford/swim/master/install | bash
 ```
 
-<br>
-####Requirements
-* node.js and npm
 
 <br>
 ##Examples
 ```shell
-  swim add https://raw.githubusercontent.com/dawsonbotsford/swim/master/exampleVimrcs/vimrcWikia.vim example
-  swim ls                    #Show available swim aliases
-  swim with example          #Set alias ```example``` as primary .vimrc
+  swim add ~/dotfiles/myVimrc favorite    #Add new swim alias
+  swim ls                                 #Show available swim aliases
+  swim add https://github.com/dawsonbotsford/swim/exampleVimrcs/vimrcWikia.vim example
+  swim with favorite         #Set alias ```favorite``` as primary .vimrc
   swim with main             #Set alias ```main``` as primary .vimrc
 
+```
+
+<br>
+##Update
+```shell
+swim update       #Update to the newest version of swim
 ```
 
 <br>
@@ -40,6 +44,7 @@ swim add <URLToRaw or pathToFile>  <alias>   #Add a swim alias
 swim with <alias>                            #Change active vimrc file
 swim ls                                      #List aliased vimrc files
 swim active                                  #Show currently aliased vimrc
+swim vim <alias>                             #Edit the vimrc stored at alias
 swim mv <alias1> <alias2>                    #Rename alias (like Linux mv)
 swim rm <alias>                              #Delete an alias entirely
 swim update                                  #Download newest version
@@ -48,10 +53,17 @@ swim help                                    #Print this message
 ```
 
 <br>
-##Update
-```shell
-swim update       #Download newest version of swim
-```
+##FAQ
+* Where does swim store my vimrc files?
+  * swim stores your vimrc files in ```~/.swim```. You can edit the vimrc files with ```swim vim <alias>``` or edit them manually from their file location.
+
+<br>
+* Does swim support emacs?
+  * Not yet, it may come in the future though (it may be an install option on version 2.0.0 seeing as it would likely break backwards compatability)
+
+<br>
+####Requirements
+* node.js and npm
 
 <br>
 ##Changelog
