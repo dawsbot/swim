@@ -4,7 +4,7 @@
 #Repo Location: https://github.com/dawsonbotsford/swim
 #Date: 09-28-2015
 
-VERSION="0.2.3"
+VERSION="0.2.4"
 usrDir=/usr/local/bin
 
 function print_help() {

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-mv $HOME/.swim/swimrc.main $HOME/.vimrc 2>/dev/null
-echo "swimrc.main set to ~/.vimrc"
+mv $HOME/.swim/main.vim $HOME/.vimrc 2>/dev/null
+echo "~/.swim/main.vim set to ~/.vimrc"
 
 rm -rf $HOME/.swim 2>/dev/null
 echo "swim directory removed from ~"
