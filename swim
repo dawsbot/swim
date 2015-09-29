@@ -4,7 +4,7 @@
 #Repo Location: https://github.com/dawsonbotsford/swim
 #Date: 09-28-2015
 
-VERSION="0.1.0"
+VERSION="0.2.0"
 usrDir=/usr/local/bin
 
 function print_help() {
@@ -157,7 +157,7 @@ while [ $# -gt 0 ]; do
 
     with | use) shift
       #if alias exists
-      if [ -e "$HOME/.swim/swimrc.$1.vim" ]; then
+      if [ -e "$HOME/.swim/$1.vim" ]; then
         #Setting active to what's already active
         if [[ $(readlink $HOME/.vimrc | cut -d . -f 3) == $1 ]]; then
           printf "$1 is already active.\n" | chalk red
