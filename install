@@ -19,6 +19,8 @@ if [[ ! $(ls -A $HOME/.vimrc 2>/dev/null) ]]; then
   touch $HOME/.vimrc
   printf "\"Swim example vimrc file
 set number" > $HOME/.vimrc
+else
+  printf "Looks like you already have a vimrc. Let's alias that to main" | chalk yellow
 fi
 
 #If swim directory does not exist
@@ -30,14 +32,6 @@ if [ ! -d "$HOME/.swim" ]; then
   #Add swim to path
   chmod +x $usrDir/swim
 
-#   #If root's vimrc does not exist
-#   if [[ ! $(ls -A $HOME/.vimrc 2>/dev/null) ]]; then
-#     printf "We could not find a .vimrc for you so we made one up!\n"
-#     touch $HOME/.vimrc
-#     printf "\"Swim example vimrc file
-# set number" > $HOME/.vimrc
-#   fi
-
   mkdir -p $HOME/.swim
   cp $HOME/.vimrc $HOME/.swim/main.vim
 
@@ -48,6 +42,7 @@ if [ ! -d "$HOME/.swim" ]; then
   swim with main
 
   printf "\nInstall complete!\n\n" | chalk green
+  swim version
 
 else
 
