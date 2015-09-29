@@ -43,14 +43,16 @@ set number" > $HOME/.vimrc
 
 else
 
-  printf "Swim already downloaded!\n" | chalk green
-  printf "You have the following swim aliases: \n"
+  printf "Swim already downloaded!\n\n" | chalk green
+  swim update
+
+  printf "\nYou have the following swim aliases: \n"
 
   printf "%s\n" "--------------------------" | chalk white
   for file in $HOME/.swim/*
   do
 
-    alias=$(echo $file | cut -d . -f 3)
+    alias=$(echo $file | cut -d . -f 2)
 
     #chalk active with green, default otherwise
     if [[ $(readlink ~/.vimrc | cut -d . -f 2) == $alias ]]; then
