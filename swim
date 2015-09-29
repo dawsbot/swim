@@ -135,8 +135,8 @@ function remove_alias() {
 
 function backup_vimrc (){
   if [ -a "$HOME/.vimrc" ]; then
-    mkdir -p $HOME/.swim/oldvimrc
-    mv $HOME/.vimrc $HOME/.swim/oldvimrc
+    mkdir -p $HOME/.swim/oldvimrc.vim
+    mv $HOME/.vimrc $HOME/.swim/oldvimrc.vim
   fi
 }
 
