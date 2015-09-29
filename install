@@ -39,13 +39,13 @@ else
 
   printf "Swim already downloaded!\n" | chalk green
   printf "You have the following swim aliases: \n"
-  printf "%s\n" "--------------------------"
+  printf "%s\n" "--------------------------" | chalk white
 
   for file in $HOME/.swim/*
   do
     echo $file | cut -d . -f 3
   done
 
-  printf "%s\n" "--------------------------"
+  printf "%s\n" "--------------------------" | chalk white
 
 fi
