@@ -11,7 +11,7 @@ if [[ ! $(which chalk 2>/dev/null) ]]; then
   npm install --global chalk-cli
 fi
 
-printf "\n\n"
+printf "\n"
 
 #If root's vimrc does not exist
 if [[ ! $(ls -A $HOME/.vimrc 2>/dev/null) ]]; then
@@ -20,7 +20,7 @@ if [[ ! $(ls -A $HOME/.vimrc 2>/dev/null) ]]; then
   printf "\"Swim example vimrc file
 set number" > $HOME/.vimrc
 else
-  printf "Looks like you already have a vimrc. Let's alias that to main" | chalk yellow
+  printf "Looks like you already have a vimrc. Let's alias that to main\n\n" | chalk yellow
 fi
 
 #If swim directory does not exist
@@ -37,9 +37,6 @@ if [ ! -d "$HOME/.swim" ]; then
 
   printf "calling \"swim add $HOME/.vimrc main\"\n"
   swim add $HOME/.vimrc main
-
-  printf "calling \"swim with main\"\n"
-  swim with main
 
   printf "\nInstall complete!\n\n" | chalk green
   swim version
@@ -67,3 +64,4 @@ else
   printf "%s\n" "--------------------------" | chalk white
 
 fi
+printf "try \"swim ls\"" | chalk yellow
