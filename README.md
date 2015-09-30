@@ -25,9 +25,9 @@ curl -s https://raw.githubusercontent.com/dawsonbotsford/swim/master/install | b
 ```shell
   swim add ~/dotfiles/myVimrc favorite    #Add new swim alias
   swim ls                                 #Show available swim aliases
-  swim add https://github.com/dawsonbotsford/swim/exampleVimrcs/vimrcWikia.vim example
-  swim with favorite         #Set alias ```favorite``` as primary .vimrc
-  swim with main             #Set alias ```main``` as primary .vimrc
+  swim add https://raw.githubusercontent.com/dawsonbotsford/swim/master/exampleVimrcs/vimrcWikia.vim example
+  swim with favorite         #Set alias favorite as primary .vimrc
+  swim with main             #Set alias main as primary .vimrc
 
 ```
 
@@ -45,6 +45,7 @@ swim with <alias>                            #Change active vimrc file
 swim ls                                      #List aliased vimrc files
 swim active                                  #Show currently aliased vimrc
 swim vim <alias>                             #Edit the vimrc stored at alias
+
 swim mv <alias1> <alias2>                    #Rename alias (like Linux mv)
 swim rm <alias>                              #Delete an alias entirely
 swim update                                  #Download newest version
