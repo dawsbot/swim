@@ -9,7 +9,7 @@
 
 <br>
 ##Demo
-show a gif of the usage here
+![demo fig](media/demo.gif)
 
 <br>
 ##Install
