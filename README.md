@@ -3,13 +3,29 @@
   <br>
   <br>
   <p align = "center">
-    <b>sw</b>itch v<b>im</b>rc files
+    <b>sw</b>itch v<b>im</b>rc files instantly
+    <br><br>
+    
+    <img src="https://img.shields.io/badge/version-0.3.2--prelaunch-brightgreen.svg" alt="MIT Licensed" />
+    <a href="LICENSE">
+      <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT Licensed" />
+    </a>
+    
   </p>
 </p>
 
 <br>
 ##Demo
 ![demo fig](media/demo.gif)
+
+<br>
+##Why
+Trying out and switching vimrc's shouldn't be hard. It shouldn't require several ```mv```'s combined with a ```wget```. Most importantly, it shouldn't stop you from always having the perfect vim configuration so you can be efficient. 
+<br>
+<p align="center">
+  <b><code>swim add</code> vimrc's directly from the internet</b>
+</p>
+or locally and alias your vimrc's with names that are easy to remember. Swim entirely replaces the need for per-directory vimrc's, headers, and external vimrc configs.
 
 <br>
 ##Install
@@ -60,17 +76,16 @@ swim help                                    #Print this message
 
 <br>
 * Does swim support emacs?
-  * Not yet, it may come in the future though (it may be an install option on version 2.0.0 seeing as it would likely break backwards compatability)
+  * Not yet, it may come in the future though (it may be an install option with the  [2.0.0](https://github.com/dawsonbotsford/swim/milestones/2.0.0) release seeing as it would likely break backwards compatability)
 
 <br>
+* Can I call swim within vim?
+  * It may be possible to hack together a several command ```:! ``` solution at the moment, but there is not a supported method. A vimscript plugin is set for the [1.0.0](https://github.com/dawsonbotsford/swim/milestones/1.0.0) release. **Looking for vimscript contributors**.
+  
+<br>
 ####Requirements
-* node.js and npm
+* node.js and npm (to auto-install [chalk-cli](https://github.com/chalk/chalk-cli))
 
 <br>
 ##Changelog
-* **1.0.0**: Initial Launch
-* **Prelaunch**: Beta Testing
-
-<br>
-##License
-MIT
+* **0.3.2-prelaunch**: Prelaunch Beta Testing
