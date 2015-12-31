@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-usrDir=/usr/local/bin
+usrDir=${usrDir:-/usr/local/bin}
 
 if [[ ! $(which npm 2>/dev/null) ]]; then
   printf "npm is required and not found. Download it then retry" | chalk red
