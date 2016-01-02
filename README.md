@@ -6,7 +6,7 @@
     <b>sw</b>itch v<b>im</b>rc files instantly
     <br><br>
     
-    <img src="https://img.shields.io/badge/version-0.3.2--prelaunch-brightgreen.svg" alt="MIT Licensed" />
+    <img src="https://img.shields.io/badge/version-0.4.0--prelaunch-brightgreen.svg" alt="MIT Licensed" />
     <a href="LICENSE">
       <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT Licensed" />
     </a>
@@ -94,4 +94,5 @@ swim help                                    #Print this message
 
 <br>
 ##Changelog
+* **0.4.0-prelaunch**: Custom executable install location
 * **0.3.2-prelaunch**: Prelaunch Beta Testing
