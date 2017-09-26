@@ -18,6 +18,7 @@
 ![demo fig](media/demo.gif)
 
 <br>
+
 ## Why
 Trying out and switching vimrc's shouldn't be hard. It shouldn't require several ```mv```'s combined with a ```wget```. Most importantly, it shouldn't stop you from always having the perfect vim configuration so you can be efficient. 
 <br>
@@ -27,6 +28,7 @@ Trying out and switching vimrc's shouldn't be hard. It shouldn't require several
 or locally and alias your vimrc's with names that are easy to remember. Swim entirely replaces the need for per-directory vimrc's, headers, and external vimrc configs.
 
 <br>
+
 ## Install
 Backup your files **before** swimming
 
@@ -34,8 +36,8 @@ Backup your files **before** swimming
 curl -s https://raw.githubusercontent.com/dawsonbotsford/swim/master/install | bash
 ```
 
-
 <br>
+
 ## Examples
 
 ```shell
@@ -48,6 +50,7 @@ curl -s https://raw.githubusercontent.com/dawsonbotsford/swim/master/install | b
 ```
 
 <br>
+
 ## Update
 
 ```shell
@@ -55,6 +58,7 @@ swim update       #Update to the newest version of swim
 ```
 
 <br>
+
 ## Available Commands
 
 ```shell
@@ -72,6 +76,7 @@ swim help                                    #Print this message
 ```
 
 <br>
+
 ## FAQ
 
 * Where does swim store my vimrc files?
@@ -92,11 +97,13 @@ swim help                                    #Print this message
   * It may be possible to hack together a several command ```:! ``` solution at the moment, but there is not a supported method. A vimscript plugin is set for the [1.0.0](https://github.com/dawsonbotsford/swim/milestones/1.0.0) release. **Looking for vimscript contributors**.
   
 <br>
+
 #### Requirements
 
 * node.js and npm (to auto-install [chalk-cli](https://github.com/chalk/chalk-cli))
 
 <br>
+
 ## Changelog
 
 * **0.4.0-prelaunch**: Custom executable install location
