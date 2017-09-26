@@ -5,21 +5,20 @@
   <p align = "center">
     <b>sw</b>itch v<b>im</b>rc files instantly
     <br><br>
-    
-    <img src="https://img.shields.io/badge/version-0.4.0--prelaunch-brightgreen.svg" alt="MIT Licensed" />
-    <a href="LICENSE">
-      <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT Licensed" />
-    </a>
+
     
   </p>
 </p>
-
 <br>
-##Demo
+    
+![](https://img.shields.io/badge/version-0.4.0--prelaunch-brightgreen.svg)
+![](https://img.shields.io/badge/license-MIT-blue.svg)
+
+## Demo
 ![demo fig](media/demo.gif)
 
 <br>
-##Why
+## Why
 Trying out and switching vimrc's shouldn't be hard. It shouldn't require several ```mv```'s combined with a ```wget```. Most importantly, it shouldn't stop you from always having the perfect vim configuration so you can be efficient. 
 <br>
 <p align="center">
@@ -28,7 +27,7 @@ Trying out and switching vimrc's shouldn't be hard. It shouldn't require several
 or locally and alias your vimrc's with names that are easy to remember. Swim entirely replaces the need for per-directory vimrc's, headers, and external vimrc configs.
 
 <br>
-##Install
+## Install
 Backup your files **before** swimming
 
 ```shell
@@ -37,7 +36,8 @@ curl -s https://raw.githubusercontent.com/dawsonbotsford/swim/master/install | b
 
 
 <br>
-##Examples
+## Examples
+
 ```shell
   swim add ~/dotfiles/myVimrc favorite    #Add new swim alias
   swim ls                                 #Show available swim aliases
@@ -48,13 +48,15 @@ curl -s https://raw.githubusercontent.com/dawsonbotsford/swim/master/install | b
 ```
 
 <br>
-##Update
+## Update
+
 ```shell
 swim update       #Update to the newest version of swim
 ```
 
 <br>
-##Available Commands
+## Available Commands
+
 ```shell
 swim add <URLToRaw or pathToFile>  <alias>   #Add a swim alias
 swim with <alias>                            #Change active vimrc file
@@ -70,7 +72,8 @@ swim help                                    #Print this message
 ```
 
 <br>
-##FAQ
+## FAQ
+
 * Where does swim store my vimrc files?
   * swim stores your vimrc files in ```~/.swim```. You can edit the vimrc files with ```swim vim <alias>``` or edit them manually from their file location.
 
@@ -89,10 +92,12 @@ swim help                                    #Print this message
   * It may be possible to hack together a several command ```:! ``` solution at the moment, but there is not a supported method. A vimscript plugin is set for the [1.0.0](https://github.com/dawsonbotsford/swim/milestones/1.0.0) release. **Looking for vimscript contributors**.
   
 <br>
-####Requirements
+#### Requirements
+
 * node.js and npm (to auto-install [chalk-cli](https://github.com/chalk/chalk-cli))
 
 <br>
-##Changelog
+## Changelog
+
 * **0.4.0-prelaunch**: Custom executable install location
 * **0.3.2-prelaunch**: Prelaunch Beta Testing
