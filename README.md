@@ -83,18 +83,21 @@ swim help                                    #Print this message
   * swim stores your vimrc files in ```~/.swim```. You can edit the vimrc files with ```swim vim <alias>``` or edit them manually from their file location.
 
 <br>
+
 *  Can I set a custom executable location?
   * Yes, the default install location of the `swim` executable is `/usr/local/bin`, but if you would like a custom location, simply set the environmental variable named `usrDir`. 
   * Example: `export usrDir="/usr/sbin"`
 (That only needs to be set for when you perform the swim install. So no need to set this in your bashrc or zshrc)
 
 <br>
+
 * Does swim support emacs?
-  * Not yet, it may come in the future though (it may be an install option with the  [2.0.0](https://github.com/dawsonbotsford/swim/milestones/2.0.0) release seeing as it would likely break backwards compatability)
+  * No, but pull requests are always welcome :)
 
 <br>
+
 * Can I call swim within vim?
-  * It may be possible to hack together a several command ```:! ``` solution at the moment, but there is not a supported method. A vimscript plugin is set for the [1.0.0](https://github.com/dawsonbotsford/swim/milestones/1.0.0) release. **Looking for vimscript contributors**.
+  * It may be possible to hack together a several command ```:! ``` solution at the moment, but there is not a supported method.
   
 <br>
 
