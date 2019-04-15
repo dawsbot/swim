@@ -11,7 +11,7 @@
 </p>
 <br>
     
-![](https://img.shields.io/badge/version-0.4.0--prelaunch-brightgreen.svg)
+![](https://img.shields.io/badge/version-0.4.0-brightgreen.svg)
 ![](https://img.shields.io/badge/license-MIT-blue.svg)
 
 ## Demo
@@ -109,5 +109,5 @@ swim help                                    #Print this message
 
 ## Changelog
 
-* **0.4.0-prelaunch**: Custom executable install location
+* **0.4.0**: Custom executable install location
 * **0.3.2-prelaunch**: Prelaunch Beta Testing
